@@ -8,10 +8,8 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 public class ExpenseRequest {
-    private Long id;
     private String description;
     private double amount;
     private LocalDate date;
     private Expense.Category category;
-    private String username;
 }

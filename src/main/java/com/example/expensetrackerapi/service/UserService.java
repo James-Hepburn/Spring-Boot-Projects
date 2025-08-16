@@ -4,17 +4,17 @@ import com.example.expensetrackerapi.model.User;
 import com.example.expensetrackerapi.repository.UserRepository;
 import lombok.*;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
-public class UserService {
-    private UserRepository repo;
-    private BCryptPasswordEncoder passwordEncoder;
+public class UserService implements UserDetailsService {
+    private final UserRepository repo;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public User registerUser (String username, String password) {
         if (this.repo.existsByUsername (username)) {
@@ -26,6 +26,7 @@ public class UserService {
         return this.repo.save (user);
     }
 
+    @Override
     public UserDetails loadUserByUsername (String username) {
         User user = this.repo.findByUsername (username)
                 .orElseThrow (() -> new RuntimeException ("User not found."));
