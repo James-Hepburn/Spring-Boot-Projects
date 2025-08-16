@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
-public class ExpenseRequest {
+public class ExpenseResponse {
     private Long id;
     private String description;
     private double amount;

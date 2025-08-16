@@ -43,4 +43,9 @@ public class UserService {
     public Optional <User> findById (Long id) {
         return this.repo.findById (id);
     }
+
+    public User getEntityByUsername (String username) {
+        return this.repo.findByUsername (username)
+                .orElseThrow (() -> new RuntimeException ("User not found."));
+    }
 }
