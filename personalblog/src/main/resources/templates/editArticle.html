@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Article</title>
+
+    <style>
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            margin-bottom: 1rem;
+            color: #1f2937;
+        }
+
+        form {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 350px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+            color: #374151;
+        }
+
+        input, textarea {
+            padding: 0.6rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37,99,235,0.2);
+        }
+
+        button {
+            padding: 0.7rem;
+            background-color: #2563eb;
+            color: white;
+            font-size: 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .back-btn {
+            display: block;
+            margin: 2rem auto;
+            padding: 0.7rem 1.5rem;
+            font-size: 1rem;
+            border: none;
+            background-color: #2563eb;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Edit Article</h1>
+
+    <form action = "/admin/save" method = "post">
+        <input type = "hidden" name = "fileName" th:value="${fileName}">
+
+        <label>Edit the title</label>
+        <input type = "text" name = "title" th:value="${title}">
+
+        <label>Edit the publishing date</label>
+        <input type = "date" name = "date" th:value="${date}">
+
+        <label>Edit the content</label>
+        <textarea name = "content" rows = "5" cols = "100" th:text="${content}"></textarea>
+
+        <button type = "submit">Update</button>
+    </form>
+
+    <button class = "back-btn" onclick = "window.location.href = '/admin/dashboard'">Go Back</button>
+</body>
+</html>
