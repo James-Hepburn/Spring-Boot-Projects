@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Unit Converter</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+
+        header {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        header button {
+            padding: 0.5em 1em;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        header button:hover {
+            background-color: #e0e0e0;
+        }
+
+        form {
+            width: 320px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            padding: 2em;
+            margin-bottom: 2rem;
+            box-sizing: border-box;
+        }
+
+        label {
+            display: block;
+            margin-top: 1em;
+            margin-bottom: 0.5em;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.5em;
+            margin-bottom: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        button[type="submit"], form button {
+            width: 100%;
+            padding: 0.75em;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            margin-top: 1em;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        button[type="submit"]:hover, form button:hover {
+            background-color: #555;
+        }
+
+        .formGroup {
+            display: none;
+        }
+
+        .formGroup.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Unit Converter</h1>
+
+    <header>
+        <button onclick = "showForm ('lengthForm')">Length</button>
+        <button onclick = "showForm ('weightForm')">Weight</button>
+        <button onclick = "showForm ('temperatureForm')">Temperature</button>
+    </header>
+
+    <form id = "lengthForm" class = "formGroup active" action = "/convert" method = "get">
+        <label>Enter the length to convert</label>
+        <input type = "number" min = "0" id = "length" name = "amount" required>
+
+        <label>Unit to convert from</label>
+        <select id = "convertFromLength" name = "from" required>
+            <option value = "mm">Millimeter (mm)</option>
+            <option value = "cm">Centimeter (cm)</option>
+            <option value = "in">Inch (in)</option>
+            <option value = "ft">Foot (ft)</option>
+            <option value = "m">Meter (m)</option>
+            <option value = "yd">Yard (yd)</option>
+            <option value = "km">Kilometer (km)</option>
+            <option value = "mi">Mile (mi)</option>
+        </select>
+
+        <label>Unit to convert to</label>
+        <select id = "convertToLength" name = "to" required>
+            <option value = "mm">Millimeter (mm)</option>
+            <option value = "cm">Centimeter (cm)</option>
+            <option value = "in">Inch (in)</option>
+            <option value = "ft">Foot (ft)</option>
+            <option value = "m">Meter (m)</option>
+            <option value = "yd">Yard (yd)</option>
+            <option value = "km">Kilometer (km)</option>
+            <option value = "mi">Mile (mi)</option>
+        </select>
+
+        <button type = "submit">Convert</button>
+    </form>
+
+    <form id = "weightForm" class = "formGroup" action = "/convert" method = "get">
+        <label>Enter the weight to convert</label>
+        <input type = "number" min = "0" id = "weight" name = "amount" required>
+
+        <label>Unit to convert from</label>
+        <select id = "convertFromWeight" name = "from" required>
+            <option value = "mg">Milligram (mg)</option>
+            <option value = "g">Gram (g)</option>
+            <option value = "oz">Ounce (oz)</option>
+            <option value = "lb">Pound (lb)</option>
+            <option value = "kg">Kilogram (kg)</option>
+        </select>
+
+        <label>Unit to convert to</label>
+        <select id = "convertToWeight" name = "to" required>
+            <option value = "mg">Milligram (mg)</option>
+            <option value = "g">Gram (g)</option>
+            <option value = "oz">Ounce (oz)</option>
+            <option value = "lb">Pound (lb)</option>
+            <option value = "kg">Kilogram (kg)</option>
+        </select>
+
+        <button type = "submit">Convert</button>
+    </form>
+
+    <form id = "temperatureForm" class = "formGroup" action = "/convert" method = "get">
+        <label>Enter the temperature to convert</label>
+        <input type = "number" min = "0" id = "temperature" name = "amount" required>
+
+        <label>Unit to convert from</label>
+        <select id = "convertFromTemperature" name = "from" required>
+            <option value = "K">Kelvin (K)</option>
+            <option value = "°C">Celsius (°C)</option>
+            <option value = "°F">Fahrenheit (°F)</option>
+        </select>
+
+        <label>Unit to convert to</label>
+        <select id = "convertToTemperature" name = "to" required>
+            <option value = "K">Kelvin (K)</option>
+            <option value = "°C">Celsius (°C)</option>
+            <option value = "°F">Fahrenheit (°F)</option>
+        </select>
+
+        <button type = "submit">Convert</button>
+    </form>
+
+    <div id = "result" style = "display: none; margin-bottom: 2rem; font-weight: bold;"></div>
+
+    <script>
+        function showForm (formId) {
+            var allForms = document.querySelectorAll (".formGroup");
+            allForms.forEach (currentForm => currentForm.classList.remove ('active'));
+
+            var activeForm = document.getElementById (formId);
+            activeForm.classList.add ("active");
+        }
+
+        window.addEventListener ('DOMContentLoaded', () => {
+            var params = new URLSearchParams (window.location.search);
+            var result = params.get ('result');
+            var amount = params.get ('amount');
+            var from = params.get ('from');
+            var to = params.get ('to');
+
+            var resultDiv = document.getElementById ("result");
+
+            if (result) {
+                resultDiv.style.display = "block";
+                resultDiv.style.color = "#333";
+                resultDiv.textContent = "Result: " + amount + " " + from + " equals " + result + " " + to;
+            }
+        });
+    </script>
+</body>
+</html>
